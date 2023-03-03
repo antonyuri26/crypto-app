@@ -1,25 +1,27 @@
 import React, { useContext } from "react";
-import { Typography, Container, Box } from "@mui/material";
-import AI from "../assets/AI.jpg";
+
+import Carousel from "./Carousel";
 import ThemeContext from "../store/theme-ctx";
 import { darkTheme } from "../util/theme";
 
-import Carousel from "./Carousel";
+import { Typography, Container, Box } from "@mui/material";
+
+import AI from "../assets/AI.jpg";
 
 //AI Image background switch depending on theme selection
 const stylesDark = {
   aibackground: {
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),url(${AI})`,
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),url(${AI})`,
   },
 };
 
 const stylesLight = {
   aibackground: {
-    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7)),url(${AI})`,
+    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(189, 189, 189, 0.9)),url(${AI})`,
   },
 };
 
-const Header = () => {
+const Header = (props) => {
   const ctx = useContext(ThemeContext);
   return (
     <Container
@@ -31,7 +33,7 @@ const Header = () => {
       }
     >
       <Container maxWidth="xl">
-        <Box sx={{ bgcolor: "transparent", height: "60vh" }}>
+        <Box sx={{ bgcolor: "transparent", height: "57vh" }}>
           {/* header content */}
           <Box
             sx={{
@@ -53,7 +55,7 @@ const Header = () => {
             </Typography>
           </Box>
           <Box>
-            <Carousel />
+            <Carousel coins={props.coins} />
           </Box>
         </Box>
       </Container>

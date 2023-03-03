@@ -1,11 +1,12 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-// import styled from "styled-components";
-import { styled } from "@mui/material/styles";
 import { useContext } from "react";
+
 import ThemeContext from "../store/theme-ctx";
 import { lightTheme, darkTheme } from "../util/theme";
+
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
 
 const SearchBar = (props) => {
   const ctx = useContext(ThemeContext);

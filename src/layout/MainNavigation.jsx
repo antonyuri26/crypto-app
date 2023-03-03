@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import ThemeContext from "../store/theme-ctx";
+import { lightTheme } from "../util/theme";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,16 +15,11 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useContext } from "react";
-
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
-import ThemeContext from "../store/theme-ctx";
-
 import cryptologo from "../assets/cryptologo.png";
 import cryptologoblk from "../assets/cryptologoblk.png";
-import { lightTheme } from "../util/theme";
 
 const pages = ["Exchanges", "Portfolio Tracker", "Crypto News"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];

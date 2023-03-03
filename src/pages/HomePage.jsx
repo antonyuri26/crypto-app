@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import MainContent from "../components/MainContent";
-import CoinsTable from "../components/CoinsTable";
+import News from "../components/news";
 
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState("false");
@@ -44,9 +44,10 @@ const HomePage = () => {
 
         setCoins(transformedCoins);
         setIsLoading(false);
-      } catch (error) {
-        setError(error.message); //message here is the msg set when throw error.
+      } catch (err) {
+        setError(err.message); //message here is the msg set when throw error.
         setIsLoading(false); //done loading with error
+        console.log(error);
       }
     };
     fetchCoinHandler();
@@ -54,8 +55,9 @@ const HomePage = () => {
 
   return (
     <>
-      <Header />
-      <MainContent coins={coins} />
+      <Header coins={coins} />
+      <MainContent coins={coins} isLoading={isLoading} />
+      <News />
     </>
   );
 };

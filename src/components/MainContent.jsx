@@ -1,9 +1,9 @@
-import { Box, Container, Typography } from "@mui/material";
-import React from "react";
-import { useCallback } from "react";
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
+
 import SearchBar from "./SearchBar";
 import CoinsTable from "./CoinsTable";
+
+import { Box, Container, Typography } from "@mui/material";
 
 const MainContent = (props) => {
   const [search, setSearch] = useState();
@@ -25,7 +25,11 @@ const MainContent = (props) => {
           Cryptocurrency Ordered by Market Cap
         </Typography>
         <SearchBar searchHandler={searchHandler} />
-        <CoinsTable coins={props.coins} search={search} />
+        <CoinsTable
+          coins={props.coins}
+          search={search}
+          isLoading={props.isLoading}
+        />
       </Box>
     </Container>
   );
