@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { ThemeProvider } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import { CssBaseline, Paper } from "@mui/material";
 
 import { lightTheme, darkTheme } from "./util/theme";
@@ -13,6 +12,7 @@ import HomePage from "./pages/HomePage";
 import Exchanges from "./pages/Exchanges";
 import Portfolio from "./pages/Portfolio";
 import CoinPage from "./pages/CoinPage";
+import ThemeContext from "./store/theme-ctx";
 
 function App() {
   const [theme, setTheme] = useState(darkTheme);
@@ -38,24 +38,29 @@ function App() {
     },
   ]);
 
+  //switch theme handler
+  const switchThemeHandler = (theme) => {
+    if (theme === "light") {
+      setTheme(lightTheme);
+    } else {
+      setTheme(darkTheme);
+    }
+  };
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Paper>
-        <RouterProvider router={router} />
-        {/* <h1>Hello World</h1>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => setTheme(lightTheme)}
-        >
-          LightTheme
-        </Button>
-        <Button variant="contained" onClick={() => setTheme(darkTheme)}>
-          DarkTheme
-        </Button> */}
-      </Paper>
-    </ThemeProvider>
+    <ThemeContext.Provider
+      value={{
+        theme: theme,
+        switchTheme: switchThemeHandler,
+      }}
+    >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Paper>
+          <RouterProvider router={router} />
+        </Paper>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

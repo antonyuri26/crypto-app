@@ -11,13 +11,17 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import { ButtonGroup } from "@mui/material";
+
+import { useContext } from "react";
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
+import ThemeContext from "../store/theme-ctx";
+
 import cryptologo from "../assets/cryptologo.png";
+import cryptologoblk from "../assets/cryptologoblk.png";
+import { lightTheme } from "../util/theme";
 
 const pages = ["Exchanges", "Portfolio Tracker", "Crypto News"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -25,6 +29,8 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const MainNavigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const ctx = useContext(ThemeContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -45,7 +51,13 @@ const MainNavigation = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={cryptologo} width={"30px"} alt="logo" />
+          {/* logo here */}
+          {ctx.theme === lightTheme ? (
+            <img src={cryptologoblk} width={"30px"} alt="logo" />
+          ) : (
+            <img src={cryptologo} width={"30px"} alt="logo" />
+          )}
+
           <Typography
             variant="h6"
             noWrap
@@ -124,7 +136,7 @@ const MainNavigation = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{ my: 2, display: "block", color: "text.primary" }}
               >
                 {page}
               </Button>
@@ -141,10 +153,18 @@ const MainNavigation = () => {
             }}
           >
             <Tooltip>
-              <LightModeIcon fontSize={"large"} />
+              <LightModeIcon
+                fontSize={"large"}
+                onClick={() => ctx.switchTheme("light")}
+                sx={{ cursor: "pointer" }}
+              />
             </Tooltip>
             <Tooltip>
-              <DarkModeIcon fontSize={"large"} />
+              <DarkModeIcon
+                fontSize={"large"}
+                onClick={() => ctx.switchTheme("dark")}
+                sx={{ cursor: "pointer" }}
+              />
             </Tooltip>
           </Box>
 
