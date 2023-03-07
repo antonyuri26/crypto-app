@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import ThemeContext from "../store/theme-ctx";
+import ThemeContext, { CurrencyContext } from "../store/theme-ctx";
 import { lightTheme } from "../util/theme";
 
 import styled from "styled-components";
@@ -36,11 +36,13 @@ const StyledButton = styled(Button)({
   },
 });
 
-const MainNavigation = () => {
+const MainNavigation = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [open, setOpen] = useState(false); //modal state
 
-  const ctx = useContext(ThemeContext);
+  const themeCtx = useContext(ThemeContext);
+  const currencyCtx = useContext(CurrencyContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,8 +59,6 @@ const MainNavigation = () => {
     setAnchorElUser(null);
   };
 
-  const [open, setOpen] = useState(false);
-
   const handleSignupModalClose = () => {
     setOpen(false);
   };
@@ -67,10 +67,14 @@ const MainNavigation = () => {
     setOpen(true);
   };
 
+  const currencySelectHandler = (evt) => {
+    props.setCurrency(evt.target.value);
+  };
+
   return (
     <>
       {open && (
-        <Modal onClose={handleSignupModalClose} theme={ctx.theme}>
+        <Modal onClose={handleSignupModalClose} theme={themeCtx.theme}>
           <Register />
         </Modal>
       )}
@@ -78,7 +82,7 @@ const MainNavigation = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* logo here */}
-            {ctx.theme === lightTheme ? (
+            {themeCtx.theme === lightTheme ? (
               <img src={cryptologoblk} width={"30px"} alt="logo" />
             ) : (
               <img src={cryptologo} width={"30px"} alt="logo" />
@@ -181,14 +185,14 @@ const MainNavigation = () => {
               <Tooltip>
                 <LightModeIcon
                   fontSize={"large"}
-                  onClick={() => ctx.switchTheme("light")}
+                  onClick={() => themeCtx.switchTheme("light")}
                   sx={{ cursor: "pointer" }}
                 />
               </Tooltip>
               <Tooltip>
                 <DarkModeIcon
                   fontSize={"large"}
-                  onClick={() => ctx.switchTheme("dark")}
+                  onClick={() => themeCtx.switchTheme("dark")}
                   sx={{ cursor: "pointer" }}
                 />
               </Tooltip>
@@ -229,7 +233,7 @@ const MainNavigation = () => {
                 variant="outlined"
                 labelId="currency-select"
                 id="currency-select"
-                value="USD"
+                value={currencyCtx.currency}
                 sx={{
                   backgroundColor: "terciary.main",
                   color: "text.secondary",
@@ -237,12 +241,12 @@ const MainNavigation = () => {
                   fontSize: "14px",
                 }}
                 style={{ width: 80, height: 38, marginLeft: 15 }}
-                // onChange={(e) => setCurrency(e.target.value)}
+                onChange={currencySelectHandler}
               >
                 <MenuItem value={"USD"} sx={{ fontSize: "14px" }}>
                   USD
                 </MenuItem>
-                <MenuItem value={"INR"} sx={{ fontSize: "14px" }}>
+                <MenuItem value={"AUD"} sx={{ fontSize: "14px" }}>
                   AUD
                 </MenuItem>
               </Select>

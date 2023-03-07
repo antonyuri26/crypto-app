@@ -12,17 +12,17 @@ import HomePage from "./pages/HomePage";
 import Exchanges from "./pages/Exchanges";
 import Portfolio from "./pages/Portfolio";
 import CoinPage from "./pages/CoinPage";
-import Signup from "./pages/Signup";
-import ThemeContext from "./store/theme-ctx";
+import ThemeContext, { CurrencyContext } from "./store/theme-ctx";
 
 function App() {
   const [theme, setTheme] = useState(darkTheme);
+  const [currency, setCurrency] = useState("USD");
 
   //creating routes
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <RootLayout />,
+      element: <RootLayout setCurrency={setCurrency} />,
       errorElement: <ErrorPage />,
       children: [
         { index: true, element: <HomePage /> },
@@ -35,7 +35,6 @@ function App() {
           element: <Portfolio />,
         },
         { path: "/coin/:id", element: <CoinPage /> },
-        { path: "/signup", element: <Signup /> },
       ],
     },
   ]);
@@ -56,12 +55,14 @@ function App() {
         switchTheme: switchThemeHandler,
       }}
     >
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Paper>
-          <RouterProvider router={router} />
-        </Paper>
-      </ThemeProvider>
+      <CurrencyContext.Provider value={{ currency: currency }}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Paper>
+            <RouterProvider router={router} />
+          </Paper>
+        </ThemeProvider>
+      </CurrencyContext.Provider>
     </ThemeContext.Provider>
   );
 }

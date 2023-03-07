@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import Progress from "../components/Progress";
-
+import styled from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,11 +11,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Pagination, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 
-import styled from "styled-components";
+import Progress from "../components/Progress";
 
 //adjusting prices format
 export function numberWithCommas(x) {

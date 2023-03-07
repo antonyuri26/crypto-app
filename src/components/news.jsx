@@ -88,7 +88,6 @@ const News = () => {
         }
 
         const newsData = await response.json();
-        console.log(newsData);
 
         const recentNews = newsData.data.map((news) => {
           return {
@@ -100,7 +99,7 @@ const News = () => {
             url: news.meta.sourceUrl,
           };
         });
-        console.log(recentNews);
+
         setNews(recentNews);
         setIsLoading(false);
       } catch (err) {

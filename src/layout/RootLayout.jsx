@@ -3,10 +3,10 @@ import { Outlet } from "react-router-dom";
 import MainNavigation from "./MainNavigation";
 import Footer from "./Footer";
 
-const RootLayout = () => {
+const RootLayout = (props) => {
   return (
     <>
-      <MainNavigation />
+      <MainNavigation setCurrency={props.setCurrency} />
       <main>
         <Outlet />
       </main>

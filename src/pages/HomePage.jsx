@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { CurrencyContext } from "../store/theme-ctx";
+
 import Header from "../components/Header";
 import MainContent from "../components/MainContent";
 import News from "../components/news";
@@ -8,6 +10,9 @@ const HomePage = () => {
   const [error, setError] = useState("");
   const [coins, setCoins] = useState([]);
 
+  const currencyCtx = useContext(CurrencyContext);
+  const currencySelected = currencyCtx.currency;
+
   useEffect(() => {
     const fetchCoinHandler = async () => {
       setIsLoading(true);
@@ -15,7 +20,7 @@ const HomePage = () => {
 
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C7d%2C24h"
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currencySelected}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C7d%2C24h`
         );
 
         if (!response.ok) {
@@ -51,7 +56,7 @@ const HomePage = () => {
       }
     };
     fetchCoinHandler();
-  }, []);
+  }, [currencySelected]);
 
   return (
     <>

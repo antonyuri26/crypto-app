@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CurrencyContext } from "../store/theme-ctx";
 
 import { Typography } from "@mui/material";
 
@@ -37,6 +38,9 @@ const Carousel = () => {
   const [error, setError] = useState("");
   const [coins, setCoins] = useState([]);
 
+  const currencyCtx = useContext(CurrencyContext);
+  const currencySelected = currencyCtx.currency;
+
   useEffect(() => {
     const fetchTopHandler = async () => {
       setIsLoading(true);
@@ -44,7 +48,7 @@ const Carousel = () => {
 
       try {
         const response = await fetch(
-          "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=gecko_desc&per_page=5&page=1&sparkline=false&price_change_percentage=24h"
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currencySelected}&order=gecko_desc&per_page=5&page=1&sparkline=false&price_change_percentage=24h`
         );
 
         if (!response.ok) {
@@ -102,7 +106,7 @@ const Carousel = () => {
       }
     };
     fetchTopHandler();
-  }, []);
+  }, [currencySelected]);
 
   return (
     <>

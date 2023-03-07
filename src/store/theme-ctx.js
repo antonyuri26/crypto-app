@@ -5,4 +5,8 @@ const ThemeContext = createContext({
   switchTheme: "",
 });
 
+export const CurrencyContext = createContext({
+  currency: "",
+});
+
 export default ThemeContext;
