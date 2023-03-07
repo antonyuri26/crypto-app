@@ -7,22 +7,27 @@ import Grid from "@mui/material/Grid";
 
 import Typography from "@mui/material/Typography";
 
+function limit(string) {
+  return string.substring(0, 120);
+}
+
 const NewsCard = (props) => {
   return (
     <Grid item xs={12} md={6} lg={4}>
-      <CardActionArea component="a" href="#">
+      <CardActionArea component="a" href={props.post.url}>
         <Card sx={{ display: "flex", height: "300px" }}>
           <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
+            <Typography component="h2" variant="h6" sx={{ lineHeight: "1.2" }}>
               {props.post.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary">
               {props.post.date}
             </Typography>
             <Typography variant="subtitle1" paragraph>
-              {props.post.description}
+              {limit(props.post.description)}
+              {"..."}
             </Typography>
-            <Typography variant="subtitle1" color="primary">
+            <Typography variant="body2" color="primary">
               Continue reading...
             </Typography>
           </CardContent>

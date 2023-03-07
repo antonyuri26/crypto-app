@@ -77,7 +77,8 @@ const News = () => {
             method: "GET",
             mode: "cors",
             headers: {
-              "Content-Type": "application/json",
+              "User-Agent":
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
             },
           }
         );
@@ -96,6 +97,7 @@ const News = () => {
             title: news.meta.title,
             description: news.meta.subtitle,
             image: news.cover,
+            url: news.meta.sourceUrl,
           };
         });
         console.log(recentNews);
@@ -123,7 +125,10 @@ const News = () => {
       <Typography variant="h4" mb="2rem" sx={{ color: "text.terciary" }}>
         Crypto News
       </Typography>
-      <Container maxWidth="xl" sx={{ backgroundColor: "primary.main" }}>
+      <Container
+        maxWidth="xl"
+        sx={{ backgroundColor: "primary.main", mb: "3rem" }}
+      >
         <Grid container spacing={4}>
           {news.map((post) => (
             <NewsCard key={post.title} post={post} />

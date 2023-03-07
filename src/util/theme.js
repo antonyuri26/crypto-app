@@ -28,7 +28,6 @@ export const lightTheme = createTheme({
     // mode: "light",
     primary: {
       main: "#fff", //background colour
-      contrastText: "#000", //text for white background
     },
     secondary: {
       main: "#000",

@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage";
 import Exchanges from "./pages/Exchanges";
 import Portfolio from "./pages/Portfolio";
 import CoinPage from "./pages/CoinPage";
+import Signup from "./pages/Signup";
 import ThemeContext from "./store/theme-ctx";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           element: <Portfolio />,
         },
         { path: "/coin/:id", element: <CoinPage /> },
+        { path: "/signup", element: <Signup /> },
       ],
     },
   ]);

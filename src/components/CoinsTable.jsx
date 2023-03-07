@@ -32,6 +32,7 @@ const Img = styled.img`
 export default function CoinsTable(props) {
   const [page, setPage] = useState(1);
 
+  //search handler
   const searchCoinHandler = () => {
     if (props.search) {
       return props.coins.filter(
@@ -42,6 +43,11 @@ export default function CoinsTable(props) {
     } else {
       return props.coins;
     }
+  };
+
+  //visit specific coin page
+  const coinClickHandler = (coin) => {
+    console.log(coin.coinName);
   };
 
   return (
@@ -93,7 +99,10 @@ export default function CoinsTable(props) {
                   .slice((page - 1) * 10, (page - 1) * 10 + 50)
                   .map((coin) => {
                     return (
-                      <TableRow key={coin.id}>
+                      <TableRow
+                        key={coin.id}
+                        onClick={() => coinClickHandler(coin)}
+                      >
                         <TableCell align="left">
                           <Checkbox
                             icon={<StarBorderIcon />}
