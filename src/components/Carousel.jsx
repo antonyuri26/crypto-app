@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CurrencyContext } from "../store/theme-ctx";
+import { useNavigate } from "react-router-dom";
 
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
@@ -37,6 +38,7 @@ const Carousel = () => {
   const [isLoading, setIsLoading] = useState("false");
   const [error, setError] = useState("");
   const [coins, setCoins] = useState([]);
+  const navigate = useNavigate();
 
   const currencyCtx = useContext(CurrencyContext);
   const currencySelected = currencyCtx.currency;
@@ -69,30 +71,40 @@ const Carousel = () => {
           };
         });
 
+        const coinClickHandler = (id) => {
+          navigate(`/coin/${id}`);
+        };
+
         const transformedCoins = trendingCoins.map((coin) => {
           return (
-            <Div className="Carousel_item-box" data-value="1">
-              <Img src={coin.image} />
-              <Typography
-                variant="h5"
-                display={"flex"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                {coin.symbol}
+            <Div
+              className="Carousel_item-box"
+              data-value="1"
+              onClick={() => coinClickHandler(coin.id)}
+            >
+              <Box sx={{ cursor: "pointer" }}>
+                <Img src={coin.image} />
                 <Typography
-                  level="h5"
-                  component="p"
-                  color={coin.price_percentage_24h > 0 ? "green" : "red"}
-                  display={"inline-block"}
-                  ml={"0.3rem"}
+                  variant="h5"
+                  display={"flex"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
                 >
-                  {coin.price_percentage_24h.toFixed(2)}%
+                  {coin.symbol}
+                  <Typography
+                    level="h5"
+                    component="p"
+                    color={coin.price_percentage_24h > 0 ? "green" : "red"}
+                    display={"inline-block"}
+                    ml={"0.3rem"}
+                  >
+                    {coin.price_percentage_24h.toFixed(2)}%
+                  </Typography>
                 </Typography>
-              </Typography>
-              <Typography variant="h5">
-                ${numberWithCommas(coin.price.toFixed(2))}
-              </Typography>
+                <Typography variant="h5">
+                  ${numberWithCommas(coin.price.toFixed(2))}
+                </Typography>
+              </Box>
             </Div>
           );
         });

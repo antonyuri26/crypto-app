@@ -15,10 +15,14 @@ export const darkTheme = createTheme({
       main: "#bdbdbd",
       contrastText: "#fff",
     },
+    extra: {
+      main: "#fff",
+    },
     text: {
       primary: "#bdbdbd",
       secondary: "#000",
       terciary: "#fff",
+      extra: "#000",
     },
   },
 });
@@ -36,10 +40,14 @@ export const lightTheme = createTheme({
       main: "#bdbdbd",
       contrastText: "#fff",
     },
+    extra: {
+      main: "#fff",
+    },
     text: {
       primary: "#000", //text for white background
       secondary: "#fff",
       terciary: "#202652",
+      extra: "#fff",
     },
   },
 });

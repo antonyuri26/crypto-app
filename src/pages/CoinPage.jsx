@@ -4,6 +4,7 @@ import { CurrencyContext } from "../store/theme-ctx";
 import { lightTheme, darkTheme } from "../util/theme";
 import ThemeContext from "../store/theme-ctx";
 import Progress from "../components/Progress";
+import Converter from "../components/Converter";
 
 import styled from "styled-components";
 import Table from "@mui/material/Table";
@@ -40,102 +41,12 @@ const CoinPage = () => {
     style = lightTheme;
   }
 
-  const CssTextField = styled(TextField)({
-    "& label.Mui-focused": {
-      color: style.palette.secondary.main,
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: style.palette.secondary.main,
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: style.palette.terciary.main,
-      },
-      "&:hover fieldset": {
-        borderColor: style.palette.secondary.main,
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: style.palette.secondary.main,
-      },
-      "& .MuiInputBase-root": {
-        color: "text.terciary",
-      },
-    },
-  });
-
   const [isLoading, setIsLoading] = useState("false");
-  const [chartLoading, setcartLoading] = useState("false");
   const [error, setError] = useState("");
-  const [chart, setChart] = useState([]);
   const [coin, setCoin] = useState();
 
   const currencyCtx = useContext(CurrencyContext);
   const currencySelected = currencyCtx.currency;
-  console.log(currencySelected);
-
-  useEffect(() => {
-    const fetchCoinDataChart = async () => {
-      setcartLoading(true);
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${params.id}/market_chart?vs_currency=${currencySelected}&days=365`
-        );
-
-        if (!response.ok) {
-          throw new Error("Something went Wrong");
-        }
-
-        const coinData = await response.json();
-
-        let data = [];
-        let y = [];
-
-        coinData.prices.forEach((element) => {
-          data.push({
-            x: new Date(element[0]).toLocaleDateString(),
-            y: Number(element[1].toFixed(2)), //add , to number later
-          });
-        });
-
-        const state = {
-          options: {
-            chart: {
-              id: "basic-canddle",
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            title: {
-              text: "Prices",
-              align: "left",
-            },
-          },
-          responsive: [
-            {
-              breakpoint: 1000,
-              options: {
-                chart: {
-                  width: "700px",
-                },
-              },
-            },
-          ],
-          series: [
-            {
-              data: data,
-            },
-          ],
-        };
-
-        setChart(state);
-        setcartLoading(false);
-      } catch (err) {
-        console.log(err);
-        setcartLoading(false);
-      }
-    };
-    fetchCoinDataChart();
-  }, [currencyCtx]);
 
   useEffect(() => {
     const fetchCoinById = async () => {
@@ -221,7 +132,7 @@ const CoinPage = () => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={9} lg={9}>
+          <Grid item xs={12} md={9} lg={9} borderBottom="1px solid gray">
             <Box
               backgroundColor="primary.main"
               width={"100%"}
@@ -298,7 +209,7 @@ const CoinPage = () => {
 
           <Grid item xs={12} md={3} lg={3}>
             {/* Coin MrkData2 */}
-            <Box backgroundColor="primary.main" width={"100%"}>
+            <Box backgroundColor="primary.main" sx={{ overflow: "hidden" }}>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -307,7 +218,12 @@ const CoinPage = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>Block Chain Site</TableCell>
-                    <TableCell>
+                    <TableCell
+                      style={{
+                        whiteSpace: "normal",
+                        wordBreak: "break-word",
+                      }}
+                    >
                       {coin.links.blockchain_site[0] || "N/A"}
                     </TableCell>
                   </TableRow>
@@ -326,43 +242,19 @@ const CoinPage = () => {
                 </TableBody>
               </Table>
             </Box>
-            {/* <Box backgroundColor="gray" width={"100%"} height="100px"></Box> */}
           </Grid>
 
           <Grid item xs={12} md={9} lg={9}>
             <Box backgroundColor="primary.main" width={"100%"} mt={"4rem"}>
-              {chartLoading ? <Progress /> : <CandleChart data={chart} />}
+              <CandleChart currency={currencySelected} coin={params.id} />
             </Box>
           </Grid>
           <Grid item xs={12} md={3} lg={3}>
-            <Box
-              backgroundColor="primary.main"
-              width={"100%"}
-              // height="400px"
-            ></Box>
-            {/* Converter */}
-            <Box mt={"3rem"}>
-              <Typography variant="h5" mb={"1rem"}>
-                Crypto Converter
-              </Typography>
-              <CssTextField
-                id="outlined-basic"
-                label="BTC"
-                variant="outlined"
-                sx={{
-                  marginBottom: "1rem",
-                  backgroundColor: "terciary.main",
-                }}
-              />
-              <CssTextField
-                id="outlined-basic"
-                label="USD"
-                variant="outlined"
-                sx={{
-                  backgroundColor: "white",
-                }}
-              />
-            </Box>
+            <Converter
+              symbol={coin.symbol.toUpperCase()}
+              currency={currencySelected}
+              currentPrice={coin.market_data.current_price.usd}
+            />
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
