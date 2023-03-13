@@ -15,13 +15,6 @@ import {
 
 import LockIcon from "@mui/icons-material/Lock";
 
-const StyledButton = styled(Button)({
-  "&:hover": {
-    backgroundColor: "#fff",
-    color: "#000",
-  },
-});
-
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,18 +70,21 @@ const SignIn = () => {
               />
             </Grid>
           </Grid>
-          <StyledButton
+          <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             sx={{
+              ":hover": {
+                backgroundColor: "terciary.main",
+                color: "primary.main",
+              },
               backgroundColor: "secondary.main",
               color: "text.secondary",
             }}
           >
             Sign In
-          </StyledButton>
+          </Button>
         </form>
       </div>
     </Container>

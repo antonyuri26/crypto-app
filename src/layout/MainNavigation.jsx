@@ -29,13 +29,6 @@ import Register from "../components/Register";
 const pages = ["Exchanges", "Portfolio Tracker", "Crypto News"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const StyledButton = styled(Button)({
-  "&:hover": {
-    backgroundColor: "#bdbdbd",
-    color: "#000",
-  },
-});
-
 const MainNavigation = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -252,8 +245,12 @@ const MainNavigation = (props) => {
               </Select>
             </Box>
             <Box sx={{ flexGrow: 0 }}>
-              <StyledButton
+              <Button
                 sx={{
+                  ":hover": {
+                    backgroundColor: "terciary.main",
+                    color: "text.secondary",
+                  },
                   backgroundColor: "secondary.main",
                   color: "text.secondary",
                   marginLeft: "1rem",
@@ -261,7 +258,7 @@ const MainNavigation = (props) => {
                 onClick={handleSignupModalOpen}
               >
                 Login
-              </StyledButton>
+              </Button>
             </Box>
           </Toolbar>
         </Container>

@@ -4,6 +4,7 @@ import { CurrencyContext } from "../store/theme-ctx";
 import Header from "../components/Header";
 import MainContent from "../components/MainContent";
 import News from "../components/news";
+import Trending from "../components/Trending";
 
 const HomePage = () => {
   const [isLoading, setIsLoading] = useState("false");
@@ -62,6 +63,7 @@ const HomePage = () => {
     <>
       <Header coins={coins} />
       <MainContent coins={coins} isLoading={isLoading} />
+      <Trending />
       <News />
     </>
   );

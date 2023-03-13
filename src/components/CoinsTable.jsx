@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import Table from "@mui/material/Table";
@@ -27,8 +29,9 @@ const Img = styled.img`
   margin-right: 1rem;
 `;
 
-export default function CoinsTable(props) {
+const CoinsTable = (props) => {
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   //search handler
   const searchCoinHandler = () => {
@@ -44,8 +47,8 @@ export default function CoinsTable(props) {
   };
 
   //visit specific coin page
-  const coinClickHandler = (coin) => {
-    console.log(coin.coinName);
+  const coinClickHandler = (id) => {
+    navigate(`/coin/${id}`);
   };
 
   return (
@@ -99,7 +102,8 @@ export default function CoinsTable(props) {
                     return (
                       <TableRow
                         key={coin.id}
-                        onClick={() => coinClickHandler(coin)}
+                        onClick={() => coinClickHandler(coin.id)}
+                        sx={{ cursor: "pointer" }}
                       >
                         <TableCell align="left">
                           <Checkbox
@@ -181,4 +185,6 @@ export default function CoinsTable(props) {
       )}
     </>
   );
-}
+};
+
+export default React.memo(CoinsTable);
