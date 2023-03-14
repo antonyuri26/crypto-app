@@ -1,9 +1,15 @@
-import React from "react";
-import Chart from "react-apexcharts";
-import { useState, useEffect, useContext } from "react";
-import Progress from "./Progress";
+import React, { useState, useEffect, useContext } from "react";
 import { darkTheme } from "../util/theme";
 import ThemeContext from "../store/theme-ctx";
+
+import Chart from "react-apexcharts";
+
+import Progress from "./Progress";
+
+//adjusting prices format
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 const CandleChart = (props) => {
   const ctx = useContext(ThemeContext);
@@ -25,18 +31,16 @@ const CandleChart = (props) => {
         const coinData = await response.json();
 
         let data = [];
-        let y = [];
 
         coinData.prices.forEach((element) => {
           data.push({
             x: new Date(element[0]).toLocaleString(),
-            y: Number(element[1].toFixed(2)), //add , to number later
+            y: Number(element[1].toFixed(2)),
           });
         });
 
         setChart(data);
 
-        // setChart(state);
         setcartLoading(false);
       } catch (err) {
         console.log(err);
@@ -44,7 +48,7 @@ const CandleChart = (props) => {
       }
     };
     fetchCoinDataChart();
-  }, [props.currency]);
+  }, [props.currency, props.coin]);
 
   const state = {
     options: {
@@ -62,6 +66,13 @@ const CandleChart = (props) => {
       markers: {
         colors: ["#F44336", "#E91E63", "#9C27B0"],
       },
+      yaxis: {
+        labels: {
+          formatter: function (val, index) {
+            return `$${numberWithCommas(val.toFixed(2))}`;
+          },
+        },
+      },
     },
     responsive: [
       {
@@ -75,12 +86,12 @@ const CandleChart = (props) => {
     ],
     series: [
       {
+        name: "Price",
         data: chart,
       },
     ],
   };
 
-  // console.log(chart);
   return (
     <>
       {chartLoading ? (
@@ -94,7 +105,6 @@ const CandleChart = (props) => {
                 series={state.series}
                 type="area"
                 height={650}
-                // className={classes.graphic}
               />
             </div>
           </div>

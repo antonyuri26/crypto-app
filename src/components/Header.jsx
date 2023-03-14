@@ -17,7 +17,8 @@ const stylesDark = {
 
 const stylesLight = {
   aibackground: {
-    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(189, 189, 189, 0.9)),url(${AI})`,
+    backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(189, 189, 189, 0.9)),url(${AI})`,
+    // backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.4), rgba(189, 189, 189, 0.9)),url(${AI})`,
   },
 };
 

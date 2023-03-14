@@ -51,9 +51,8 @@ const HomePage = () => {
         setCoins(transformedCoins);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message); //message here is the msg set when throw error.
-        setIsLoading(false); //done loading with error
-        console.log(error);
+        setError(err.message);
+        setIsLoading(false);
       }
     };
     fetchCoinHandler();

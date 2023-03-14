@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { CurrencyContext } from "../store/theme-ctx";
-import { lightTheme, darkTheme } from "../util/theme";
-import ThemeContext from "../store/theme-ctx";
 import Progress from "../components/Progress";
 import Converter from "../components/Converter";
+import CoinChart from "../components/CoinChart";
 
 import styled from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TextField from "@mui/material/TextField";
 import { Container, Grid, Box, Typography, TableRow } from "@mui/material";
 
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
-import CandleChart from "../components/CandleChart";
 
 //adjusting prices format
 export function numberWithCommas(x) {
@@ -31,16 +27,6 @@ const Img = styled.img`
 
 const CoinPage = () => {
   const params = useParams();
-
-  const ctx = useContext(ThemeContext);
-  let style;
-
-  if (ctx.theme === darkTheme) {
-    style = darkTheme;
-  } else {
-    style = lightTheme;
-  }
-
   const [isLoading, setIsLoading] = useState("false");
   const [error, setError] = useState("");
   const [coin, setCoin] = useState();
@@ -67,13 +53,15 @@ const CoinPage = () => {
         setCoin(coinData);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message); //message here is the msg set when throw error.
-        setIsLoading(false); //done loading with error
+        setError(err.message);
+        setIsLoading(false);
         console.log(error);
       }
     };
     fetchCoinById();
   }, []);
+
+  console.log(isLoading);
 
   if (!coin) return <Progress />;
 
@@ -107,19 +95,36 @@ const CoinPage = () => {
                   </Typography>
                 </Box>
                 <Box display={"flex"} flexDirection={"row"}>
-                  <Typography variant="h5">
-                    $
-                    {coin.market_data.current_price.usd
-                      ? numberWithCommas(
-                          coin.market_data.current_price.usd.toFixed(2)
-                        )
-                      : "N/A"}
-                  </Typography>
+                  {currencySelected === "USD" ? (
+                    <Typography variant="h5">
+                      $
+                      {coin.market_data.current_price.usd
+                        ? numberWithCommas(
+                            coin.market_data.current_price.usd.toFixed(2)
+                          )
+                        : "N/A"}
+                    </Typography>
+                  ) : (
+                    <Typography variant="h5">
+                      $
+                      {coin.market_data.current_price.usd
+                        ? numberWithCommas(
+                            coin.market_data.current_price.aud.toFixed(2)
+                          )
+                        : "N/A"}
+                    </Typography>
+                  )}
                   <Box alignSelf={"center"}>
                     {coin.market_data.price_change_percentage_24h > 0 ? (
-                      <ArrowDropUpIcon />
+                      <ArrowDropUpIcon
+                        color={"success"}
+                        sx={{ fontSize: "2rem" }}
+                      />
                     ) : (
-                      <ArrowDropDownIcon sx={{ fontSize: "2rem" }} />
+                      <ArrowDropDownIcon
+                        color={"warning"}
+                        sx={{ fontSize: "2rem" }}
+                      />
                     )}
                   </Box>
                   <Typography component="span" alignSelf={"center"}>
@@ -144,14 +149,25 @@ const CoinPage = () => {
                   <TableBody>
                     <TableRow>
                       <TableCell>Market Cap</TableCell>
-                      <TableCell>
-                        $
-                        {coin.market_data.market_cap.usd
-                          ? numberWithCommas(
-                              coin.market_data.market_cap.usd.toFixed(2)
-                            )
-                          : "N/A"}
-                      </TableCell>
+                      {currencySelected === "USD" ? (
+                        <TableCell>
+                          $
+                          {coin.market_data.market_cap.usd
+                            ? numberWithCommas(
+                                coin.market_data.market_cap.usd.toFixed(2)
+                              )
+                            : "N/A"}
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          $
+                          {coin.market_data.market_cap.usd
+                            ? numberWithCommas(
+                                coin.market_data.market_cap.aud.toFixed(2)
+                              )
+                            : "N/A"}
+                        </TableCell>
+                      )}
                     </TableRow>
                     <TableRow>
                       <TableCell>Circulating Supply</TableCell>
@@ -192,14 +208,25 @@ const CoinPage = () => {
                     </TableRow>
                     <TableRow>
                       <TableCell>Total Volume</TableCell>
-                      <TableCell>
-                        $
-                        {coin.market_data.total_volume.usd
-                          ? numberWithCommas(
-                              coin.market_data.total_volume.usd.toFixed(2)
-                            )
-                          : "N/A"}
-                      </TableCell>
+                      {currencySelected === "USD" ? (
+                        <TableCell>
+                          $
+                          {coin.market_data.total_volume.usd
+                            ? numberWithCommas(
+                                coin.market_data.total_volume.usd.toFixed(2)
+                              )
+                            : "N/A"}
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          $
+                          {coin.market_data.total_volume.usd
+                            ? numberWithCommas(
+                                coin.market_data.total_volume.aud.toFixed(2)
+                              )
+                            : "N/A"}
+                        </TableCell>
+                      )}
                     </TableRow>
                   </TableBody>
                 </Table>
@@ -246,14 +273,15 @@ const CoinPage = () => {
 
           <Grid item xs={12} md={9} lg={9}>
             <Box backgroundColor="primary.main" width={"100%"} mt={"4rem"}>
-              <CandleChart currency={currencySelected} coin={params.id} />
+              <CoinChart currency={currencySelected} coin={params.id} />
             </Box>
           </Grid>
           <Grid item xs={12} md={3} lg={3}>
             <Converter
               symbol={coin.symbol.toUpperCase()}
               currency={currencySelected}
-              currentPrice={coin.market_data.current_price.usd}
+              currentPriceUsd={coin.market_data.current_price.usd}
+              currentPriceAud={coin.market_data.current_price.aud}
             />
           </Grid>
 

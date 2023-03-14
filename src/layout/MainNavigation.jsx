@@ -2,29 +2,31 @@ import React, { useContext, useState } from "react";
 import ThemeContext, { CurrencyContext } from "../store/theme-ctx";
 import { lightTheme } from "../util/theme";
 
-import styled from "styled-components";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import Modal from "./Modal";
+import Register from "../components/Register";
+
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  Select,
+  Badge,
+} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { Select } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
 import cryptologo from "../assets/cryptologo.png";
 import cryptologoblk from "../assets/cryptologoblk.png";
-
-import Modal from "./Modal";
-import Register from "../components/Register";
 
 const pages = ["Exchanges", "Portfolio Tracker", "Crypto News"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -64,6 +66,12 @@ const MainNavigation = (props) => {
     props.setCurrency(evt.target.value);
   };
 
+  const scrollOnClick = () => {
+    //good and old JS to make things work
+    const section = document.getElementById("news");
+    setAnchorElUser(null);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
     <>
       {open && (
@@ -155,7 +163,7 @@ const MainNavigation = (props) => {
               CRYPTO
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {/* {pages.map((page) => (
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
@@ -163,7 +171,37 @@ const MainNavigation = (props) => {
                 >
                   {page}
                 </Button>
-              ))}
+              ))} */}
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block", color: "text.primary" }}
+              >
+                EXCHANGES
+              </Button>
+
+              <Button
+                onClick={scrollOnClick}
+                sx={{ my: 2, display: "block", color: "text.primary" }}
+              >
+                CRYPTO NEWS
+              </Button>
+              <Button
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, display: "block", color: "text.primary" }}
+              >
+                CRYPTO TRACKER
+                <span
+                  style={{
+                    color: themeCtx.theme === lightTheme ? "black" : "yellow",
+                    fontSize: "0.65rem",
+                    paddingLeft: "1px",
+                    position: "absolute",
+                    top: "5px",
+                  }}
+                >
+                  <sup>NEW</sup>
+                </span>
+              </Button>
             </Box>
             <Box
               sx={{

@@ -1,10 +1,11 @@
-import React, { useContext, useState, useRef } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import React, { useContext, useState } from "react";
 import ThemeContext from "../store/theme-ctx";
+import { CurrencyContext } from "../store/theme-ctx";
+import { lightTheme, darkTheme } from "../util/theme";
+
+import { Box, Typography, TextField, Button } from "@mui/material";
 
 import styled from "styled-components";
-import { lightTheme, darkTheme } from "../util/theme";
-import { red } from "@mui/material/colors";
 
 //adjusting prices format
 export function numberWithCommas(x) {
@@ -15,6 +16,8 @@ const Converter = (props) => {
   const ctx = useContext(ThemeContext);
   const [input, setInput] = useState(props.symbol);
   const [value, setValue] = useState();
+  const currencyCtx = useContext(CurrencyContext);
+  const currencySelected = currencyCtx.currency;
 
   let style;
 
@@ -57,7 +60,11 @@ const Converter = (props) => {
   let enteredInput;
   const inputHandler = (evt) => {
     enteredInput = evt.target.value;
-    total = evt.target.value * props.currentPrice.toFixed(2);
+    if (currencySelected === "USD") {
+      total = evt.target.value * props.currentPriceUsd.toFixed(2);
+    } else {
+      total = evt.target.value * props.currentPriceAud.toFixed(2);
+    }
   };
 
   const convertHandler = () => {
@@ -67,11 +74,7 @@ const Converter = (props) => {
 
   return (
     <>
-      <Box
-        backgroundColor="primary.main"
-        width={"100%"}
-        // height="400px"
-      ></Box>
+      <Box backgroundColor="primary.main" width={"100%"}></Box>
       {/* Converter */}
       <Box mt={"3rem"}>
         <Typography variant="h5" mb={"1rem"}>
@@ -96,18 +99,24 @@ const Converter = (props) => {
               backgroundColor: "extra.main",
             }}
           />
-          <Typography
-            variant="subtitle2"
-            sx={{ color: "secondary.main", marginTop: "0.8rem" }}
-          >
-            {props.currecy === "aud"
-              ? `1 ${props.symbol} = $${numberWithCommas(
-                  props.currentPrice.toFixed(2) * 1.5
-                )}`
-              : `1 ${props.symbol} = $${numberWithCommas(
-                  props.currentPrice.toFixed(2)
-                )}`}
-          </Typography>
+          {currencySelected === "USD" ? (
+            <Typography
+              variant="subtitle2"
+              sx={{ color: "secondary.main", marginTop: "0.8rem" }}
+            >
+              1 {props.symbol} = $
+              {numberWithCommas(props.currentPriceUsd.toFixed(2))}
+            </Typography>
+          ) : (
+            <Typography
+              variant="subtitle2"
+              sx={{ color: "secondary.main", marginTop: "0.8rem" }}
+            >
+              1 {props.symbol} = $
+              {numberWithCommas(props.currentPriceAud.toFixed(2))}
+            </Typography>
+          )}
+
           <Button
             sx={{
               marginTop: "0.5rem",

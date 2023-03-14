@@ -60,13 +60,13 @@ export default function Trending() {
         setTrending(trendingCOins);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message); //message here is the msg set when throw error.
-        setIsLoading(false); //done loading with error
-        console.log(error);
+        setError(err.message);
+        setIsLoading(false);
       }
     };
     fetchTrendingCoins();
   }, []);
+
   return (
     <Box
       sx={{
@@ -91,7 +91,11 @@ export default function Trending() {
                 <CardContent>
                   <Box display={"flex"} justifyContent={"space-between"}>
                     <Img src={trend.image} />
-                    <Box display={"flex"} flex={"1"}>
+                    <Box
+                      display={"flex"}
+                      flex={"1"}
+                      justifyContent={"space-between"}
+                    >
                       <Typography
                         sx={{ fontSize: 14 }}
                         color="text.secondary"

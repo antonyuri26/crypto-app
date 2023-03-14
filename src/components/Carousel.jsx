@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CurrencyContext } from "../store/theme-ctx";
 import { useNavigate } from "react-router-dom";
+import { CurrencyContext } from "../store/theme-ctx";
 
 import { Typography, Box } from "@mui/material";
 
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styled from "styled-components";
+
 import Progress from "./Progress";
 
 const responsive = {
@@ -98,7 +99,7 @@ const Carousel = () => {
                     display={"inline-block"}
                     ml={"0.3rem"}
                   >
-                    {coin.price_percentage_24h.toFixed(2)}%
+                    <strong>{coin.price_percentage_24h.toFixed(2)}%</strong>
                   </Typography>
                 </Typography>
                 <Typography variant="h5">
@@ -112,8 +113,8 @@ const Carousel = () => {
         setCoins(transformedCoins);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message); //message here is the msg set when throw error.
-        setIsLoading(false); //done loading with error
+        setError(err.message);
+        setIsLoading(false);
         console.log(error);
       }
     };

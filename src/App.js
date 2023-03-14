@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lightTheme, darkTheme } from "./util/theme";
+import ThemeContext, { CurrencyContext } from "./store/theme-ctx";
 
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Paper } from "@mui/material";
-
-import { lightTheme, darkTheme } from "./util/theme";
 
 import RootLayout from "./layout/RootLayout";
 import ErrorPage from "./pages/ErrorPage";
@@ -12,7 +12,6 @@ import HomePage from "./pages/HomePage";
 import Exchanges from "./pages/Exchanges";
 import Portfolio from "./pages/Portfolio";
 import CoinPage from "./pages/CoinPage";
-import ThemeContext, { CurrencyContext } from "./store/theme-ctx";
 
 function App() {
   const [theme, setTheme] = useState(darkTheme);

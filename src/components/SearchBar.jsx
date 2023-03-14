@@ -42,7 +42,6 @@ const SearchBar = (props) => {
   });
 
   const searchBoxHandler = (e) => {
-    // e.preventDefault();
     props.searchHandler(e.target.value);
   };
 
@@ -67,8 +66,6 @@ const SearchBar = (props) => {
           },
         }}
         onChange={searchBoxHandler}
-        // value={search}
-        // onChange={(e) => props.searchHandler(e.target.value)}
       />
     </Box>
   );
