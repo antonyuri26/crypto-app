@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 
 import NewsCard from "./NewsCard";
 import Progress from "./Progress";
+import axios from "axios";
 
 const News = () => {
   const [isLoading, setIsLoading] = useState("false");
@@ -21,19 +22,7 @@ const News = () => {
       try {
         const response = await fetch(
           // "https://api.gagarin.news/api/news?page=1&per_page=9&sort=-date",
-          "https://www.xtremepricespy.com/_api/request-data.php",
-          {
-            method: "GET",
-
-            headers: {
-              "access-control-allow-methods": "GET, POST, OPTIONS",
-              "Content-Type": "application/json",
-              "access-control-expose-headers": "Content-Length,Content-Range",
-              "access-control-allow-headers":
-                "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range",
-              "access-control-expose-headers": "Content-Length,Content-Range",
-            },
-          }
+          "https://www.xtremepricespy.com/_api/request-data.php?url=https://api.gagarin.news/api/news?page=1&per_page=9&sort=-date"
         );
 
         if (!response.ok) {
