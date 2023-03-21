@@ -59,9 +59,11 @@ export default function Trending() {
 
         setTrending(trendingCOins);
         setIsLoading(false);
+        console.log(isLoading);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
+        console.log(error);
       }
     };
     fetchTrendingCoins();

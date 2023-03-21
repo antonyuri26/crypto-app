@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 
 import Container from "@mui/material/Container";
@@ -47,7 +47,7 @@ const News = () => {
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        console.log(err);
+        console.log(error);
       }
     };
     fetchNewsHandler();
