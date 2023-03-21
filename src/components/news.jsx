@@ -13,23 +13,61 @@ const News = () => {
   const [error, setError] = useState("");
   const [news, setNews] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchNewsHandler = async () => {
+  //     setIsLoading(true);
+  //     setError(null);
+
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.coinmarketcap.com/content/v3/news?page=6&size=9",
+  //         {
+  //           method: "GET",
+  //           mode: "cors",
+  //           headers: {
+  //             "User-Agent":
+  //               "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+  //           },
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error("Something went Wrong");
+  //       }
+
+  //       const newsData = await response.json();
+
+  //       const recentNews = newsData.data.map((news) => {
+  //         return {
+  //           id: news.meta.id,
+  //           date: news.createdAt,
+  //           title: news.meta.title,
+  //           description: news.meta.subtitle,
+  //           image: news.cover,
+  //           url: news.meta.sourceUrl,
+  //         };
+  //       });
+
+  //       setNews(recentNews);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       setError(err.message);
+  //       setIsLoading(false);
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchNewsHandler();
+  // }, []);
+
   useEffect(() => {
     const fetchNewsHandler = async () => {
       setIsLoading(true);
       setError(null);
-
+      console.log(process.env.REACT_APP_NEWS_API);
       try {
-        const response = await fetch(
-          "https://api.coinmarketcap.com/content/v3/news?page=6&size=9",
-          {
-            method: "GET",
-            mode: "cors",
-            headers: {
-              "User-Agent":
-                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-            },
-          }
-        );
+        const response = await fetch(process.env.REACT_APP_NEWS_API, {
+          method: "GET",
+        });
 
         if (!response.ok) {
           throw new Error("Something went Wrong");
@@ -39,21 +77,23 @@ const News = () => {
 
         const recentNews = newsData.data.map((news) => {
           return {
-            id: news.meta.id,
-            date: news.createdAt,
-            title: news.meta.title,
-            description: news.meta.subtitle,
-            image: news.cover,
-            url: news.meta.sourceUrl,
+            id: news.content[0].key,
+            date: new Date(news.date).toLocaleString(),
+            title: news.h1,
+            description: news.preview,
+            image: news.image,
+            url: "https://gagarin.news/news/" + news.slug,
           };
         });
+
+        console.log(recentNews);
 
         setNews(recentNews);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
-        console.log(error);
+        // console.log(err);
       }
     };
     fetchNewsHandler();

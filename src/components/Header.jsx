@@ -5,6 +5,7 @@ import ThemeContext from "../store/theme-ctx";
 import { darkTheme } from "../util/theme";
 
 import { Typography, Container, Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import AI from "../assets/AI.jpg";
 
@@ -23,6 +24,7 @@ const stylesLight = {
 };
 
 const Header = (props) => {
+  const tablet = useMediaQuery("(min-width:700px)");
   const ctx = useContext(ThemeContext);
   return (
     <Container
@@ -46,12 +48,17 @@ const Header = (props) => {
             }}
           >
             <Typography
-              variant="h1"
+              variant={tablet ? "h1" : "h2"}
               sx={{ fontWeight: 500, color: "text.terciary" }}
+              textAlign={tablet ? "" : "center"}
             >
               Crypto Tracker
             </Typography>
-            <Typography variant="h4" sx={{ color: "text.primary" }}>
+            <Typography
+              variant={tablet ? "h4" : "h5"}
+              sx={{ color: "text.primary" }}
+              textAlign={tablet ? "" : "center"}
+            >
               The World's Best Crypto APP Available!
             </Typography>
           </Box>

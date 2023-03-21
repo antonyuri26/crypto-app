@@ -86,7 +86,7 @@ export default function Trending() {
       >
         <Grid container spacing={4}>
           {trending.map((trend) => (
-            <Grid item xs={12} md={4} lg={3} key={trend.title}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={trend.title}>
               <Card sx={{ minWidth: 275 }}>
                 <CardContent>
                   <Box display={"flex"} justifyContent={"space-between"}>
@@ -103,12 +103,14 @@ export default function Trending() {
                       >
                         {trend.title}
                       </Typography>
-                      <Typography variant="h5" component="div">
-                        {/* ${trend.price_btc.toFixed(7)} */}
+                      <Typography variant="h6" component="div">
+                        ${trend.price_btc ? trend.price_btc.toFixed(7) : "N/A"}
                       </Typography>
                     </Box>
                     <Box alignContent={"end"}>
-                      <Typography>{trend.mrkCap}</Typography>
+                      <Typography variant="caption" ml={"1rem"}>
+                        {trend.mrkCap}
+                      </Typography>
                     </Box>
                   </Box>
                 </CardContent>
