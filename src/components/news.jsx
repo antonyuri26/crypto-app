@@ -17,11 +17,14 @@ const News = () => {
     const fetchNewsHandler = async () => {
       setIsLoading(true);
       setError(null);
-      console.log(process.env.REACT_APP_NEWS_API);
+
       try {
-        const response = await fetch(process.env.REACT_APP_NEWS_API, {
-          method: "GET",
-        });
+        const response = await fetch(
+          "https://api.gagarin.news/api/news?page=1&per_page=9&sort=-date",
+          {
+            method: "GET",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Something went Wrong");
