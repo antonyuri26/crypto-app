@@ -8,6 +8,9 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import styled from "styled-components";
 
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
 import Progress from "./Progress";
 
 const responsive = {
@@ -99,6 +102,17 @@ const Carousel = () => {
                     display={"inline-block"}
                     ml={"0.3rem"}
                   >
+                    {coin.price_percentage_24h > 0 ? (
+                      <ArrowDropUpIcon
+                        color={"success"}
+                        sx={{ fontSize: "2rem" }}
+                      />
+                    ) : (
+                      <ArrowDropDownIcon
+                        color={"warning"}
+                        sx={{ fontSize: "2rem" }}
+                      />
+                    )}
                     <strong>{coin.price_percentage_24h.toFixed(2)}%</strong>
                   </Typography>
                 </Typography>

@@ -104,7 +104,7 @@ export default function Trending() {
                         {trend.title}
                       </Typography>
                       <Typography variant="h5" component="div">
-                        ${trend.price_btc.toFixed(7)}
+                        {/* ${trend.price_btc.toFixed(7)} */}
                       </Typography>
                     </Box>
                     <Box alignContent={"end"}>
