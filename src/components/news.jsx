@@ -23,8 +23,12 @@ const News = () => {
           "https://api.gagarin.news/api/news?page=1&per_page=9&sort=-date",
           {
             method: "GET",
+
             headers: {
+              "access-control-allow-methods": "GET, POST, OPTIONS",
+              "access-control-allow-origin": "https://gagarin.news",
               "Content-Type": "application/json",
+              "access-control-expose-headers": "Content-Length,Content-Range",
               "access-control-allow-headers":
                 "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range",
               "access-control-expose-headers": "Content-Length,Content-Range",
