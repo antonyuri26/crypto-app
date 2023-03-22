@@ -13,6 +13,7 @@ import { Box, Pagination, Typography } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import Progress from "../components/Progress";
 
@@ -28,6 +29,7 @@ const Img = styled.img`
 `;
 
 const CoinsTable = (props) => {
+  const phone = useMediaQuery("(min-width:600px)");
   const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
@@ -61,7 +63,10 @@ const CoinsTable = (props) => {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <TableContainer component={Paper} sx={{ width: "80%" }}>
+          <TableContainer
+            component={Paper}
+            sx={{ width: phone ? "90%" : "100%" }}
+          >
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead sx={{ backgroundColor: "secondary.main" }}>
                 <TableRow>

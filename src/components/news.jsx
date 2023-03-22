@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 
 import NewsCard from "./NewsCard";
 import Progress from "./Progress";
-import axios from "axios";
 
 const News = () => {
   const [isLoading, setIsLoading] = useState("false");
